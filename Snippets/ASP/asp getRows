@@ -1,0 +1,30 @@
+How to use get rows
+
+
+	Set rsdtl = Server.CreateObject("ADODB.Recordset")
+	rsdtl.CursorLocation = 3
+	rsdtl.Open sSql, conn, 1, 2
+	nDtlRecs = rsdtl.RecordCount
+	arrRecs = rsdtl.GetRows
+
+For row = 0 To UBound(arrRecs, 2) 'Rows
+    For col = 0 To UBound(arrRecs, 1) 'Columns
+        Response.Write rsdtl.Fields(col).Name & " = " & arrRecs(col, row) & " "
+    Next
+    Response.Write "<br />"
+Next
+
+For iRowLoop = 0 to UBound(arrRecs, 2)
+	response.write "<tr>"
+	  For iColLoop = 0 to UBound(arrRecs, 1)
+			if rsdtl.Fields(iColLoop).Name = "ano" then
+				response.write "<td align=left><span class=""padrao"">"
+			else
+				response.write "<td align=right><span class=""padrao"">"
+			end if
+			Response.Write arrRecs(iColLoop, iRowLoop)
+			response.write "</span></td>"
+	
+	  Next 'iColLoop
+  	response.write "</tr>"
+Next 'iRowLoop
